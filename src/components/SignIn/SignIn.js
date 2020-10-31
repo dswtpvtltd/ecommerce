@@ -1,30 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+//user actions
+import { emailSignStart, googleSignInStart } from './../../store/User/user.actions';
 
 import './SignIn.scss';
 import Buttons from '../form/Button';
 import FormInput from '../form/FormInput';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 
-import { signInWithGoogle, auth } from '../../firebase/utils';
+const mapState = state => {
+    return {
+        currentUser: state.user.currentUser
+    }
+}
 
-const SignIn = props => {
+const SignIn = () => {
+
+    const dispatch = useDispatch();
+    const { currentUser } = useSelector(mapState);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        if (currentUser) {
+            resetForm();
+        }
+    }, [currentUser]);
+
+    const resetForm = () => {
+        setEmail('');
+        setPassword('');
+    }
+
     const onSubmitHandler = async (e) => {
         e.preventDefault();
+        dispatch(emailSignStart({ email, password }));
+    }
 
-        try {
-            await auth.signInWithEmailAndPassword(email, password);
-
-            setEmail('');
-            setPassword('');
-
-        } catch (err) {
-            console.log(err);
-        }
-
+    const handleGooelSignIn = () => {
+        dispatch(googleSignInStart());
     }
 
     const configAuthWrapper = {
@@ -55,7 +72,7 @@ const SignIn = props => {
 
                     <div className="socialSignIn">
                         <div className="row">
-                            <Buttons type="button" onClick={() => signInWithGoogle()}>Sign In with Google</Buttons>
+                            <Buttons type="button" onClick={() => handleGooelSignIn()}>Sign In with Google</Buttons>
                         </div>
                     </div>
 

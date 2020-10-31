@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { auth, handleUserProfile } from './firebase/utils';
-import { setCurrentUser } from './store/User/user.actions';
+import { useSelector, useDispatch } from 'react-redux';
+
+//components
+import AdminToolbar from './components/AdminToolbar/AdminToolbar';
+
+import { checkUserSession } from './store/User/user.actions';
 
 //hoc
 import WithAuth from './hoc/withAuth';
+import WithAdminAuth from './hoc/withAdminAuth';
 
 //layouts
 import HomepageLayout from './layouts/HomepageLayout';
@@ -19,34 +23,26 @@ import Recovery from './components/pages/Recovery/Recovery';
 import Homepage from './components/pages/Homepage/Homepage';
 import Registration from './components/pages/Registration/Registration';
 import Dashboard from './components/pages/Dashboard/Dashboard';
+import Admin from './components/pages/Admin/Admin';
+
+const mapState = state => {
+  return {
+    currentUser: state.user.currentUser
+  };
+};
 
 const App = props => {
-  const { setCurrentUser, currentUser } = props;
+
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector(mapState);
 
   useEffect(() => {
-    const authListner = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await handleUserProfile(userAuth);
-
-        userRef.onSnapshot(snapshot => {
-          setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data()
-          });
-        });
-      }
-
-      setCurrentUser(userAuth);
-    });
-
-    return () => {
-      authListner();
-    }
-
-  }, [setCurrentUser]);
+    dispatch(checkUserSession());
+  }, [dispatch]);
 
   return (
     <div className="App" >
+      <AdminToolbar />
       <Switch>
         <Route path="/" exact render={() => {
           return (<HomepageLayout>
@@ -84,21 +80,18 @@ const App = props => {
           </WithAuth>
         )}
         />
+
+        <Route path="/admin" render={() => (
+          <WithAdminAuth>
+            <MainLayout>
+              <Admin />
+            </MainLayout>
+          </WithAdminAuth>
+        )}
+        />
       </Switch>
     </div>
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.user.currentUser
-  };
-};
-
-const mapDispatchToState = dispatch => {
-  return {
-    setCurrentUser: user => dispatch(setCurrentUser(user))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToState)(App);
+export default App;

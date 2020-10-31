@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
-
-import { auth, handleUserProfile } from './../../firebase/utils';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Signup.scss';
+
+import { signUpUserStart } from './../../store/User/user.actions';
 import AuthWrapper from '../AuthWrapper/AuthWrapper';
 import FormInput from '../form/FormInput';
 import Button from '../form/Button';
 
+const mapState = state => {
+    return {
+        currentUser: state.user.currentUser,
+        userError: state.user.userError
+    };
+}
+
 const Signup = props => {
+    const dispatch = useDispatch();
+    const { currentUser, userError } = useSelector(mapState);
+
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmpassword] = useState('');
-
     const [errors, setErrors] = useState([]);
 
     const resetValues = () => {
@@ -24,27 +34,21 @@ const Signup = props => {
         setConfirmpassword('');
     };
 
-    const onSubmitHandler = async e => {
-        e.preventDefault();
-
-        if (password !== confirmpassword) {
-
-            setErrors(["Password don't match"]);
-
-            return;
-        }
-
-        try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
-            await handleUserProfile(user, {
-                firstname, lastname, email, password
-            });
-
+    useEffect(() => {
+        if (currentUser) {
             resetValues();
-
-        } catch (err) {
-            console.log(err);
         }
+    }, [currentUser, dispatch]);
+
+    useEffect(() => {
+        if (Array.isArray(userError) && userError.length > 0) {
+            setErrors(userError);
+        }
+    }, [userError]);
+
+    const onSubmitHandler = e => {
+        e.preventDefault();
+        dispatch(signUpUserStart({ firstname, lastname, email, password, confirmpassword }));
     };
 
     const configAuthWrapper = {
