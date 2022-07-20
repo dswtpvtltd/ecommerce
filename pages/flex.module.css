@@ -1,0 +1,8 @@
+.parent {
+  @apply flex flex-row justify-center;
+}
+
+.child {
+  background-color: red;
+  @apply m-1 w-48 h-48;
+}

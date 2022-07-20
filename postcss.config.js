@@ -1,0 +1,34 @@
+module.exports = {
+  plugins: [
+    "postcss-import",
+    "tailwindcss/nesting",
+    "tailwindcss",
+    "postcss-flexbugs-fixes",
+    [
+      "postcss-preset-env",
+      {
+        autoprefixer: {
+          flexbox: "no-2009",
+        },
+        stage: 0,
+        features: {
+          "custom-properties": false,
+          "nesting-rules": true,
+        },
+      },
+    ],
+  ],
+};
+
+// module.exports = {
+//   plugins: {
+//     "postcss-import": {},
+//     "tailwindcss/nesting": "postcss-nesting",
+//     tailwindcss: {},
+//     "postcss-flexbugs-fixes": {},
+//     "postcss-preset-env": {
+//       features: { "nesting-rules": false },
+//     },
+//     autoprefixer: {},
+//   },
+// };
