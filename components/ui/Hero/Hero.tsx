@@ -11,7 +11,7 @@ interface HeroProps {
 const Hero: FC<HeroProps> = ({ headline, description }) => {
   return (
     <div className="bg-black">
-      <Container el={"p" as any}>
+      <Container>
         <div className={s.root}>
           <h2 className={s.headline}>{headline}</h2>
           <div>

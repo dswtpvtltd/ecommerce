@@ -3,8 +3,8 @@ const merge = require("deepmerge");
 const fs = require("fs");
 const prettier = require("prettier");
 
-const ALLOWED_FW = ["shopify", "bigcommerce", "shopify_local"];
-const FALLBACK_FW = "shopify";
+const ALLOWED_FW = ["magento", "shopify", "bigcommerce", "magento_local"];
+const FALLBACK_FW = "magento";
 
 function withFrameworkConfig(defaultConfig = {}) {
   const framework = defaultConfig?.framework?.name;
@@ -23,7 +23,7 @@ function withFrameworkConfig(defaultConfig = {}) {
     );
   }
 
-  if (framework === "shopify_local") {
+  if (framework === "magento_local") {
     framework = FALLBACK_FW;
   }
 

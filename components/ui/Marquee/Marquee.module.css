@@ -5,6 +5,11 @@
     width: 100%;
   }
 }
+
+.secondary {
+  @apply bg-white;
+}
+
 .container {
   @apply flex flex-row;
   & > * {

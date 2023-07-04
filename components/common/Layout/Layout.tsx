@@ -1,12 +1,29 @@
 import { FC, ReactNode } from "react";
-import style from "./Layout.module.css";
+import s from "./Layout.module.css";
+import { Footer, Navbar } from "@components/common";
+import { Sidebar } from "@components/ui";
+import { CartSidebar } from "@components/cart";
+import { useUI } from "@components/ui/context";
+import { ApiProvider } from "@framework";
 
 type Props = {
   children?: ReactNode;
 };
 
 const Layout: FC<Props> = ({ children }) => {
-  return <main className={style.root}>{children}</main>;
+  const { isSidebarOpen, closeSidebar } = useUI();
+  return (
+    <ApiProvider>
+      <div className={s.root}>
+        <Navbar />
+        <Sidebar onClose={closeSidebar} isOpen={isSidebarOpen}>
+          <CartSidebar />
+        </Sidebar>
+        <main className={s.root}>{children}</main>
+        <Footer />
+      </div>
+    </ApiProvider>
+  );
 };
 
 export default Layout;

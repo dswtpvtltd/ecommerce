@@ -1,0 +1,17 @@
+query MainBanner($mainslider: Int) {
+  mainbanner: allBanners(slider_id: $mainslider) {
+    items {
+      banner_id
+      name
+      slidertitle
+      sliderdescription
+      order_banner
+      slider_id
+      click_url
+      image
+      image_alt
+      width
+      height
+    }
+  }
+}

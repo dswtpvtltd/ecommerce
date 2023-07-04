@@ -1,21 +1,25 @@
 import React, { FC, ReactNode } from "react";
-import Ticker from "react-ticker";
+//import Ticker from "react-ticker";
 import s from "./Marquee.module.css";
+import cn from "classnames";
 
 interface MarqueeProps {
   children: ReactNode | ReactNode[];
+  variant?: "primary" | "secondary";
 }
 
-const Marquee: FC<MarqueeProps> = ({ children }) => {
+const Marquee: FC<MarqueeProps> = ({ children, variant = "primary" }) => {
+  const rootClassName = cn(
+    s.root,
+    {
+      [s.secondary]: variant === "secondary"
+    });
+
   return (
-    <div className={s.root}>
-      <Ticker offset="run-in" speed={10}>
-        {({ index }) => (
-          <div key={index} className={s.container}>
-            {children}
-          </div>
-        )}
-      </Ticker>
+    <div className={rootClassName}>
+      <div className={s.container}>
+        {children}
+      </div>
     </div>
   );
 };

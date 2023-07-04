@@ -19,16 +19,3 @@ module.exports = {
     ],
   ],
 };
-
-// module.exports = {
-//   plugins: {
-//     "postcss-import": {},
-//     "tailwindcss/nesting": "postcss-nesting",
-//     tailwindcss: {},
-//     "postcss-flexbugs-fixes": {},
-//     "postcss-preset-env": {
-//       features: { "nesting-rules": false },
-//     },
-//     autoprefixer: {},
-//   },
-// };

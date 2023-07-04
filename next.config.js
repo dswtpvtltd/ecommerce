@@ -3,7 +3,7 @@ const { withFrameworkConfig } = require("./framework/common/config");
 
 const nextConfig = withFrameworkConfig({
   framework: {
-    name: "shopify",
+    name: "magento",
   },
   reactStrictMode: true,
   i18n: {

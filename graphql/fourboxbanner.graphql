@@ -1,0 +1,17 @@
+query FourBoxBanner($fourboxdata: Int) {
+  fourboxbanner: allBanners(slider_id: $fourboxdata) {
+    items {
+      banner_id
+      name
+      slidertitle
+      sliderdescription
+      order_banner
+      slider_id
+      click_url
+      image
+      image_alt
+      width
+      height
+    }
+  }
+}

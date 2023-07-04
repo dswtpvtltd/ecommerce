@@ -1,0 +1,38 @@
+query allRouts($categoryid: String) {
+  categories(filters: { ids: { eq: $categoryid } }) {
+    items {
+      uid
+      level
+      name
+      titlecat
+      path
+      url_path
+      url_key
+      children {
+        uid
+        level
+        name
+        titlecat
+        path
+        url_path
+        url_key
+      }
+    }
+  }
+  cmsPages {
+    allPages {
+      name
+      identifier
+      content
+      page_layout
+    }
+  }
+  productCollection {
+    allProducts {
+      id
+      sku
+      name
+      url_key
+    }
+  }
+}

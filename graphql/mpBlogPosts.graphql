@@ -1,0 +1,138 @@
+query BlogPost(
+  $action: String!
+  $filter: PostsFilterInput
+  $authorName: String
+  $tagName: String
+  $topicId: Int
+  $categoryId: Int
+  $categoryKey: String
+  $postId: Int
+  $pageSize: Int = 10
+  $currentPage: Int = 1
+  $sortBy: String
+) {
+  mpBlogPosts(
+    action: $action
+    filter: $filter
+    authorName: $authorName
+    tagName: $tagName
+    topicId: $topicId
+    categoryId: $categoryId
+    categoryKey: $categoryKey
+    postId: $postId
+    pageSize: $pageSize
+    currentPage: $currentPage
+    sortBy: $sortBy
+  ) {
+    items {
+      allow_comment
+      author_id
+      author_name
+      author_url
+      author_url_key
+      categories {
+        items {
+          category_id
+          children_count
+          created_at
+          description
+          enabled
+          import_source
+          level
+          meta_description
+          meta_keywords
+          meta_robots
+          meta_title
+          name
+          parent_id
+          path
+          position
+          posts {
+            items {
+              allow_comment
+              author_id
+              author_name
+              author_url
+              author_url_key
+              categories {
+                items {
+                  category_id
+                  children_count
+                  created_at
+                  description
+                  enabled
+                  import_source
+                  level
+                  meta_description
+                  meta_keywords
+                  meta_robots
+                  meta_title
+                  name
+                  parent_id
+                  path
+                  position
+                  store_ids
+                  updated_at
+                  url_key
+                }
+                total_count
+              }
+              created_at
+              enabled
+              image
+              import_source
+              in_rss
+              layout
+              meta_description
+              meta_keywords
+              meta_robots
+              meta_title
+              name
+              post_content
+              post_id
+              publish_date
+              short_description
+              store_ids
+              updated_at
+              url_key
+              view_traffic
+            }
+            total_count
+          }
+          store_ids
+          updated_at
+          url_key
+        }
+        total_count
+      }
+      created_at
+      enabled
+      image
+      import_source
+      in_rss
+      layout
+      meta_description
+      meta_keywords
+      meta_robots
+      meta_title
+      name
+      post_content
+      post_id
+      publish_date
+      short_description
+      store_ids
+      updated_at
+      url_key
+      view_traffic
+    }
+    pageInfo {
+      currentPage
+      endPage
+      hasNextPage
+      hasPreviousPage
+      pageSize
+      startPage
+    }
+    total_count
+  }
+}

@@ -32,7 +32,7 @@
   &:before {
     @apply transition-transform duration-1000 block w-full h-full bg-repeat-space;
     content: "";
-    background-image: url("/product-pattern-bg.svg");
+    background-image: url("/images/product-pattern-bg.svg");
   }
 }
 .productTag {

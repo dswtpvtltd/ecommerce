@@ -4,8 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import s from "./ProductCard.module.css";
 
-const placeholderImage = "/product-image-placeholder.svg";
-
 interface Props {
   product: Product;
   variant?: "simple" | "slim";
@@ -14,7 +12,7 @@ interface Props {
 const ProductCard: FC<Props> = ({ product, variant = "simple" }) => {
   return (
     <>
-      <Link href={`/product/${product.slug}`}>
+      <Link href={`/product/${product.url_key}`}>
         <a className={s.root}>
           {variant === "slim" ? (
             <>
@@ -23,10 +21,10 @@ const ProductCard: FC<Props> = ({ product, variant = "simple" }) => {
                   {product.name}
                 </span>
               </div>
-              {product.images && (
+              {product.image && (
                 <div className={s.productImageSlim}>
                   <Image
-                    src={placeholderImage}
+                    src={product.image.url}
                     alt={product.name ?? "Product Name"}
                     height={320}
                     width={320}
@@ -44,13 +42,14 @@ const ProductCard: FC<Props> = ({ product, variant = "simple" }) => {
                   <span>{product.name}</span>
                 </h3>
                 <span className={s.productPrice}>
-                  {product.price?.value} {product.price?.currencyCode}
+                  {product.price_range.maximum_price.regular_price.value}
+                  {product.price_range.maximum_price.regular_price.currency}
                 </span>
               </div>
-              {product.images && (
+              {product.image && (
                 <div className={s.productImage}>
                   <Image
-                    src={placeholderImage}
+                    src={product.image.url}
                     alt={product.name}
                     height={540}
                     width={540}
